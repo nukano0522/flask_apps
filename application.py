@@ -9,7 +9,8 @@ def main_page():
         return render_template("page.html",text=text)
     elif request.method == 'POST':
         name = request.form["name"]
-        text = "こんにちは" + name + "さん"
+        hobby = request.form["hobby"]
+        text = f"こんにちは{name}さん、あなたの趣味は{hobby}なんですね"
         return render_template("page.html",text=text)
 
 ## 実行
