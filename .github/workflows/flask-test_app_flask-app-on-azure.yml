@@ -6,8 +6,14 @@ name: Build and deploy Python app to Azure Web App - flask-app-on-azure
 
 on:
   push:
-    branches:
-      - flask/test_app
+    paths:
+      - 'test_on_azure/**'
+
+# on:
+#   push:
+#     branches:
+#       - flask/test_app
+
   workflow_dispatch:
 
 jobs:
