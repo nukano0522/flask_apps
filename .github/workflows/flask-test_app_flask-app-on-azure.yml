@@ -9,7 +9,7 @@ on:
     branches:
       - flask/test_app
     paths:
-      - "test_on_azure/**""
+      - "test_on_azure/**"
 
 # on:
 #   push:
