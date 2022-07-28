@@ -16,6 +16,10 @@ on:
 
   workflow_dispatch:
 
+defaults:
+  run:
+    working-directory: test_on_azure
+
 jobs:
   build:
     runs-on: ubuntu-latest
