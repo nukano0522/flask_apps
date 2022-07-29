@@ -37,6 +37,8 @@ app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
 app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
 app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_DEFAULT_SENDER")
 
+print(app.config["MAIL_DEFAULT_SENDER"])
+
 # DebugToolbarExtensionにアプリケーションをセットする
 toolbar = DebugToolbarExtension(app)
 
@@ -101,7 +103,8 @@ def contact_complete():
 
 def send_email(to, subject, template, **kwargs):
     """メールを送信する関数"""
-    msg = Message(subject, sender=app.config["MAIL_DEFAULT_SENDER"], recipients=[to])
+    # msg = Message(subject, sender=app.config["MAIL_DEFAULT_SENDER"], recipients=[to])
+    msg = Message(subject, sender="MailForWebAPI", recipients=[to])
     msg.body = render_template(template + ".txt", **kwargs)
     msg.html = render_template(template + ".html", **kwargs)
     mail.send(msg)
