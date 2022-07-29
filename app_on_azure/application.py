@@ -36,6 +36,8 @@ app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 # app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
 # app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
 # app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_DEFAULT_SENDER")
+
+# 本番（AzureWebApp）だと環境変数が取得できていないのでハードコーディング
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
