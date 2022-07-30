@@ -40,7 +40,7 @@ jobs:
         with:
           name: python-app
           path: |
-            . 
+            ./postgres-tutorial
             !venv/
 
   deploy:
