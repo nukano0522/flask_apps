@@ -1,4 +1,5 @@
 from flask import Flask, flash, render_template, request
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -9,6 +10,8 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 # app.secret_key = 'secret string'
 
 db = SQLAlchemy(app)
+
+migrate = Migrate(app, db)
 
 
 class People(db.Model):
