@@ -5,7 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.config[
     "SQLALCHEMY_DATABASE_URI"
-] = "postgresql://postgres:postgres@localhost/postgres"
+    # ] = "postgresql://postgres:postgres@localhost/postgres"
+] = "postgresql://postgres:postgres@azure-pg-01/Postgres001"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 # app.secret_key = 'secret string'
 
