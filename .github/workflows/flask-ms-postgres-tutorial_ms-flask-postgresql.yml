@@ -8,6 +8,8 @@ on:
   push:
     branches:
       - flask/ms-postgres-tutorial
+    paths:
+      - "postgres-tutorial/**"
   workflow_dispatch:
 
 jobs:
@@ -28,6 +30,7 @@ jobs:
           source venv/bin/activate
       
       - name: Install dependencies
+        working-directory: ./postgres-tutorial
         run: pip install -r requirements.txt
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
