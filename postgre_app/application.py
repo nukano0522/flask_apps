@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.config[
     "SQLALCHEMY_DATABASE_URI"
     # ] = "postgresql://postgres:postgres@localhost/postgres"
-] = "postgresql://postgres:postgres@azure-pg-01/Postgres001"
+] = "postgresql://postgres:Postgres001@azure-pg-01/postgres"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 # app.secret_key = 'secret string'
 
