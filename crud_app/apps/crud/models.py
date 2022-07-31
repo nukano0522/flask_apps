@@ -4,7 +4,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 # from apps.app import db
 sys.path.append('../')
-from application import db
+from app import db
 
 
 # db.Modelを継承したUserクラスを作成する

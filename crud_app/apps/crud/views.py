@@ -5,7 +5,7 @@ from flask import Blueprint, redirect, render_template, url_for
 
 import sys
 sys.path.append('../')
-from application import db
+from app import db
 
 # Blueprintでcrudアプリを生成する
 crud = Blueprint(
@@ -84,10 +84,10 @@ def edit_user(user_id):
     return render_template("crud/edit.html", user=user, form=form)
 
 
-# @crud.route("/users/<user_id>/delete", methods=["POST"])
-# # @login_required
-# def delete_user(user_id):
-#     user = User.query.filter_by(id=user_id).first()
-#     db.session.delete(user)
-#     db.session.commit()
-#     return redirect(url_for("crud.users"))
+@crud.route("/users/<user_id>/delete", methods=["POST"])
+# @login_required
+def delete_user(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    db.session.delete(user)
+    db.session.commit()
+    return redirect(url_for("crud.users"))
