@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 import os
-# from apps.config import config
+from config.config import DevConfig, ProdConfig
 
 db = SQLAlchemy()
 
@@ -15,16 +15,16 @@ def create_app():
     # Flaskインスタンス生成
     app = Flask(__name__)
     app.secret_key = "hogehoge"
-    # app.config.from_object(config[config_key])
+
     # WEBSITE_HOSTNAME exists only in production environment
     if not 'WEBSITE_HOSTNAME' in os.environ:
           # local development, where we'll use environment variables
         print("Loading config.development and environment variables from .env file.")
-        app.config.from_object('azureproject.development')
+        app.config.from_object(DevConfig)
     else:
         # production
         print("Loading config.production.")
-        app.config.from_object('azureproject.production')
+        app.config.from_object(ProdConfig)
     
     print(app.config.get('DATABASE_URI'))
     app.config.update(
