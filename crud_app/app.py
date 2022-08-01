@@ -14,7 +14,6 @@ csrf = CSRFProtect()
 def create_app():
     # Flaskインスタンス生成
     app = Flask(__name__)
-    app.secret_key = "hogehoge"
 
     # WEBSITE_HOSTNAME exists only in production environment
     if not 'WEBSITE_HOSTNAME' in os.environ:
@@ -26,18 +25,15 @@ def create_app():
         print("Loading config.production.")
         app.config.from_object(ProdConfig)
     
-    print(app.config.get('DATABASE_URI'))
-    app.config.update(
-        SQLALCHEMY_DATABASE_URI=app.config.get('DATABASE_URI'),
-        SQLALCHEMY_TRACK_MODIFICATIONS=False,
-        SQLALCHEMY_ECHO=True,
-        WTF_CSRF_SECRET_KEY = "AuwzyszU5sugKN7KZs6f"
-    )
+    print(app.config.get('SQLALCHEMY_DATABASE_URI'))
+
     csrf.init_app(app)
 
     db.init_app(app)
     Migrate(app, db)
 
+    # Global宣言するとmodel.pyからの呼び出してエラーとなるため関数内に記述
+    # "flask db migrate" の際に必要 
     from crud.models import User
 
     # crudパッケージからviewsをimportする
