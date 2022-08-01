@@ -11,10 +11,10 @@ from flask import (
     url_for,
 )
 
-from .forms import UploadImageForm
+from .forms import UploadImageForm, DeleteForm
 
 from .models import UserImage
-import sys
+import os, sys
 sys.path.append('../')
 from app import db
 from crud.models import User
@@ -33,7 +33,13 @@ def index():
         .all()
     )
 
-    return render_template("detector/index.html", user_images=user_images)
+    delete_form = DeleteForm()
+
+    return render_template(
+        "detector/index.html", 
+        user_images=user_images,
+        delete_form = delete_form
+    )
 
 
 @dt.route("/images/<path:filename>")
@@ -67,3 +73,28 @@ def upload_image():
 
         return redirect(url_for("detector.index"))
     return render_template("detector/upload.html", form=form)
+
+
+@dt.route("/images/delete/<string:image_id>", methods=["POST"])
+# @login_required
+def delete_image(image_id):
+    try:
+        # user_image_tagsテーブルからレコードを削除する
+        # db.session.query(UserImageTag).filter(
+        #     UserImageTag.user_image_id == image_id
+        # ).delete()
+
+        # imageフォルダのファイルも削除する
+        delete_image = db.session.query(UserImage).filter(UserImage.id == image_id).first()
+        delete_image_path = Path(current_app.config["UPLOAD_FOLDER"], delete_image.image_path)
+        os.remove(delete_image_path)
+
+        # user_imageテーブルからレコードを削除する
+        db.session.query(UserImage).filter(UserImage.id == image_id).delete()
+        db.session.commit()
+    except Exception as e:
+        flash("画像削除処理でエラーが発生しました。")
+        # エラーログ出力
+        current_app.logger.error(e)
+        db.session.rollback()
+    return redirect(url_for("detector.index"))

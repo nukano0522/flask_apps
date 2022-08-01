@@ -10,6 +10,16 @@
 <div class="card col-md-7 dt-image-content">
     <header class="d-flex justify-content-between">
         <div class="dt-image-username">{{ user_image.User.username }}</div>
+        <!-- 物体検知フォームを追加する -->
+        <div class="d-flex flex-row-reverse">
+            <!-- 削除ボタンのフォームを追加する -->
+            <div class="p-2">
+                <form action="{{ url_for('detector.delete_image', image_id=user_image.UserImage.id) }}" method="POST">
+                    {{ delete_form.csrf_token }}
+                    {{ delete_form.submit(class="btn btn-danger") }}
+                </form>
+            </div>
+        </div>
     </header>
     <section>
         <img src="{{ url_for('detector.image_file', filename=user_image.UserImage.image_path) }}" alt="アップロード画像" />
