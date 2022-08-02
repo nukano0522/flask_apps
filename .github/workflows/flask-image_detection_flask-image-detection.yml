@@ -8,6 +8,8 @@ on:
   push:
     branches:
       - flask/image_detection
+    paths:
+      - "image_detection/**"
   workflow_dispatch:
 
 jobs:
@@ -28,6 +30,7 @@ jobs:
           source venv/bin/activate
       
       - name: Install dependencies
+        working-directory: ./image_detection
         run: pip install -r requirements.txt
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
@@ -37,7 +40,7 @@ jobs:
         with:
           name: python-app
           path: |
-            . 
+            ./image_detection
             !venv/
 
   deploy:
