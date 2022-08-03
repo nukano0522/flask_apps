@@ -194,7 +194,9 @@ def exec_detect(user_image, target_image_path):
     image_tensor = torchvision.transforms.functional.to_tensor(image)
 
     # 学習済みモデルの読み込み
-    model = torch.load(Path(current_app.root_path, "detector", "model.pt"))
+    model_path = current_app.config["MODEL_PATH"]
+    print(f"MODEL_PATH: {model_path}")
+    model = torch.load(model_path)
 
     # モデルの推論モードに切り替え
     model = model.eval()

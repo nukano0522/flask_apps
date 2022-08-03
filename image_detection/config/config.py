@@ -125,6 +125,8 @@ class DevConfig(CommonConfig):
     STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
     STATIC_URL = 'static/'
 
+    MODEL_PATH = Path(BASE_DIR, "../model/image_detection", "model.pt")
+
 
 class ProdConfig(CommonConfig):
     # SECURITY WARNING: keep the secret key used in production secret!
@@ -142,3 +144,5 @@ class ProdConfig(CommonConfig):
         dbhost=os.environ['DBHOST'] + ".postgres.database.azure.com",
         dbname=os.environ['DBNAME']
     )
+
+    MODEL_PATH = Path(BASE_DIR, "detector", "model.pt")
