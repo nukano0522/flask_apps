@@ -4,4 +4,4 @@
 # pip install --upgrade pip
 # pip install torch==1.12.0+cpu torchvision==0.13.0+cpu torchaudio==0.8.0 -f https://download.pytorch.org/whl/torch_stable.html
 
-gunicorn --bind=0.0.0.0 --timeout 600 --chdir ml_api_01 run:app
+gunicorn --bind=0.0.0.0 --timeout 600 --chdir ml_api_nlp run:app
