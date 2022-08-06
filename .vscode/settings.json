@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/b5732973-8051-4da1-a240-3012ac1129ef/microsoft.web/sites/subscriptions/b5732973-8051-4da1-a240-3012ac1129ef/resourceGroups/azure_for_personal_use/providers/Microsoft.Web/sites/flask-ml-api-03",
+    "appService.deploySubpath": "mlapi"
+}

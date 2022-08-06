@@ -13,6 +13,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+### 学習済みモデル ###
+*.pt
+*.pth
+
 # C extensions
 *.so
 
