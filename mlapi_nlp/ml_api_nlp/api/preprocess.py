@@ -52,10 +52,15 @@ def get_req_text(request):
   Returns:
       _type_: _description_
   """
-  text_json = request.json
-  texts = [t["text"] for t in text_json]
+
+  ### リクエストのテキストが複数の場合
+  # text_json = request.json
+  # texts = [t["text"] for t in text_json]
   # print(f"request_text: {texts}")
-  return texts
+  # return texts
+
+  texts = request.json["text"]
+  return [texts]
 
 
 def text_to_loader(texts, tokenizer):

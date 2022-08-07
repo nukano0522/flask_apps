@@ -1,4 +1,3 @@
-from pathlib import Path
 
 import torch
 from transformers import BertJapaneseTokenizer
@@ -7,7 +6,6 @@ from flask import current_app, jsonify
 from ml_api_nlp.api.preprocess import get_req_text, text_to_loader
 from ml_api_nlp.api.bert_model import BertModel
 
-basedir = Path(__file__).parent.parent
 
 def bert_prediction(request):
     
@@ -36,7 +34,7 @@ def bert_prediction(request):
     # モデルの推論モードに切り替え
     net_trained.eval()
 
-    # GPUが使えるならGPUにデータを送る
+    # # GPUが使えるならGPUにデータを送る
     batch = next(iter(dataloader))
     print(f"Batch Size: {batch['ids'][0].size()}")
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -50,18 +48,26 @@ def bert_prediction(request):
     
     _, preds = torch.max(outputs, 1)  # ラベルを予測
 
-    # tensorからnumpyに変換
-    preds_num = preds.to('cpu').detach().numpy()
-    print(f"preds_num: {preds_num}")
+    ### リクエストのテキストが複数の場合
+    # # tensorからnumpyに変換
+    # preds_num = preds.to('cpu').detach().numpy()
+    # print(f"preds_num: {preds_num}")
 
-    # レスポンスデータ
-    result_dict = []
-    for i, p in enumerate(preds_num):
-        tmp = {}
-        tmp["text"] =batch["text"][i][0:20] + "..."
-        tmp["pred"] = current_app.config["ID2LABEL"][p]
-        result_dict.append(tmp)
+    # # レスポンスデータ
+    # result_dict = []
+    # for i, p in enumerate(preds_num):
+    #     tmp = {}
+    #     tmp["text"] =batch["text"][i][0:20] + "..."
+    #     tmp["pred"] = current_app.config["ID2LABEL"][p]
+    #     result_dict.append(tmp)
 
-    # 結果データのエンコード設定
-    current_app.config["JSON_AS_ASCII"] = False
-    return jsonify({"results": result_dict})
+    # # 結果データのエンコード設定
+    # current_app.config["JSON_AS_ASCII"] = False
+    # return jsonify({"results": result_dict})
+
+
+    pred_num = preds.to('cpu').detach().numpy()[0]
+
+    print(f"pred: {pred_num}")
+
+    return jsonify({"pred": str(pred_num)}), 201
