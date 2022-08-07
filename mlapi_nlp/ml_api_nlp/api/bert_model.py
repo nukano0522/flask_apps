@@ -3,11 +3,12 @@ from transformers import BertModel
 
 model = BertModel.from_pretrained("cl-tohoku/bert-base-japanese-whole-word-masking", output_attentions=False, output_hidden_states=False)
 
-class BertForLivedoor(nn.Module):
-    '''BERTモデルにLivedoorニュースの9クラスを判定する部分をつなげたモデル'''
+class BertModel(nn.Module):
+    """9クラス分類の全結合層をつなげたBERTモデル
+    """
 
     def __init__(self):
-        super(BertForLivedoor, self).__init__()
+        super(BertModel, self).__init__()
 
         # BERTモジュール
         self.bert = model  # 日本語学習済みのBERTモデル
@@ -21,13 +22,10 @@ class BertForLivedoor(nn.Module):
         nn.init.normal_(self.cls.bias, 0)
 
     def forward(self, input_ids):
-        '''
-        input_ids： [batch_size, sequence_length]の文章の単語IDの羅列
-        '''
-
-        # BERTの基本モデル部分の順伝搬
-        # 順伝搬させる
-        result = self.bert(input_ids)  # reult は、sequence_output, pooled_output
+        """順伝搬
+        """
+        # BERTの順伝搬
+        result = self.bert(input_ids)  # result は、sequence_output, pooled_output
 
         # sequence_outputの先頭の単語ベクトルを抜き出す
         vec_0 = result[0]  # 最初の0がsequence_outputを示す

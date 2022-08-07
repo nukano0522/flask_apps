@@ -1,8 +1,6 @@
-from ml_api_nlp.api.config import base, local
-# import inspect
-# print(f"{__name__}の呼び出し元ファイル:{inspect.stack()[0][1]}")
+from ml_api_nlp.api.config.config import DevConfig, ProdConfig
 
-config = {
-    "base": base.Config,
-    "local": local.LocalConfig,
+config_case = {
+    "dev": DevConfig,
+    "prod": ProdConfig,
 }

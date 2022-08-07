@@ -1,16 +1,14 @@
 from flask import Blueprint, jsonify, request
 
-from ml_api_nlp.api import calculation
+from ml_api_nlp.api import prediction
 
 api = Blueprint("api", __name__)
-tmp = "hogehoge"
-print(f"__init__.pyのtmp: {tmp}")
 
 @api.get("/")
 def index():
-    return jsonify({"column": "value"}), 201
+    return jsonify({"test": "hogehoge"}), 201
 
 
 @api.post("/predict")
-def prediction():
-    return calculation.bert_prediction(request)
+def predict():
+    return prediction.bert_prediction(request)
