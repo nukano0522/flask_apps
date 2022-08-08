@@ -9,7 +9,6 @@ from ml_api_nlp.api.bert_model import BertModel
 
 def bert_prediction(request):
     
-    # print(f"request: {vars(request)}")
     tokenizer = BertJapaneseTokenizer.from_pretrained("cl-tohoku/bert-base-japanese-whole-word-masking")
     
     # テキストの読み込み

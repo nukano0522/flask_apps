@@ -11,7 +11,7 @@ class BertModel(nn.Module):
         super(BertModel, self).__init__()
 
         # BERTモジュール
-        self.bert = model  # 日本語学習済みのBERTモデル
+        self.bert = model
 
         # headにクラス予測を追加
         # 入力はBERTの出力特徴量の次元768、出力は9クラス
@@ -29,7 +29,7 @@ class BertModel(nn.Module):
 
         # sequence_outputの先頭の単語ベクトルを抜き出す
         vec_0 = result[0]  # 最初の0がsequence_outputを示す
-        vec_0 = vec_0[:, 0, :]  # 全バッチ。先頭0番目の単語の全768要素
+        vec_0 = vec_0[:, 0, :]  # 先頭0番目の単語の全768要素
         vec_0 = vec_0.view(-1, 768)  # sizeを[batch_size, hidden_size]に変換
         output = self.cls(vec_0)  # 全結合層
 
