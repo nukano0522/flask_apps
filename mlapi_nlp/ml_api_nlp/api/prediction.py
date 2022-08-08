@@ -68,6 +68,11 @@ def bert_prediction(request):
 
     pred_num = preds.to('cpu').detach().numpy()[0]
 
-    print(f"pred: {pred_num}")
+    result_dict = {}
+    result_dict["text"] = batch["text"][0][0:20] + "..."
+    result_dict["pred"] = current_app.config["ID2LABEL"][pred_num]
+    print(f"result_dict: {result_dict}")
 
-    return jsonify({"pred": str(pred_num)}), 201
+    # return jsonify({"pred": str(pred_num)}), 201
+    current_app.config["JSON_AS_ASCII"] = False
+    return jsonify({"results": result_dict})
