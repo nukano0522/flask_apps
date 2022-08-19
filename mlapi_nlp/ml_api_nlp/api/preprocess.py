@@ -11,7 +11,7 @@ class CreateDataset(Dataset):
   Args:
       Dataset (_type_): _description_
   """
-  def __init__(self, X, tokenizer, max_len):
+  def __init__(self, X:list, tokenizer, max_len):
     self.X = X
     self.tokenizer = tokenizer
     self.max_len = max_len
@@ -52,15 +52,8 @@ def get_req_text(request):
   Returns:
       _type_: _description_
   """
-
-  ### リクエストのテキストが複数の場合
-  # text_json = request.json
-  # texts = [t["text"] for t in text_json]
-  # print(f"request_text: {texts}")
-  # return texts
-
-  texts = request.json["text"]
-  return [texts]
+  texts = request.json["data"]
+  return texts
 
 
 def text_to_loader(texts, tokenizer):

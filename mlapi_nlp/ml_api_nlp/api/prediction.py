@@ -46,32 +46,19 @@ def bert_prediction(request):
     print("... Complete.")
     
     _, preds = torch.max(outputs, 1)  # ラベルを予測
+    print(f"preds: {preds}")
 
-    ### リクエストのテキストが複数の場合
-    # # tensorからnumpyに変換
-    # preds_num = preds.to('cpu').detach().numpy()
-    # print(f"preds_num: {preds_num}")
+    preds_num = preds.to('cpu').detach().numpy()
+    print(f"preds_num: {preds_num}")
 
-    # # レスポンスデータ
-    # result_dict = []
-    # for i, p in enumerate(preds_num):
-    #     tmp = {}
-    #     tmp["text"] =batch["text"][i][0:20] + "..."
-    #     tmp["pred"] = current_app.config["ID2LABEL"][p]
-    #     result_dict.append(tmp)
+    # レスポンスデータ
+    results = []
+    for i, p in enumerate(preds_num):
+        res = {}
+        res["text"] = batch["text"][i][0:20] + "..."
+        res["pred"] = current_app.config["ID2LABEL"][p]
+        res["pred_label"] = str(p)
+        results.append(res)
 
-    # # 結果データのエンコード設定
-    # current_app.config["JSON_AS_ASCII"] = False
-    # return jsonify({"results": result_dict})
-
-
-    pred_num = preds.to('cpu').detach().numpy()[0]
-
-    result_dict = {}
-    result_dict["text"] = batch["text"][0][0:20] + "..."
-    result_dict["pred"] = current_app.config["ID2LABEL"][pred_num]
-    print(f"result_dict: {result_dict}")
-
-    # return jsonify({"pred": str(pred_num)}), 201
     current_app.config["JSON_AS_ASCII"] = False
-    return jsonify({"results": result_dict})
+    return jsonify({"results": results})

@@ -26,7 +26,8 @@ curl -X POST http://127.0.0.1:5000/predict -H "Content-Type:application/json" -d
 
 curl -X POST http://127.0.0.1:5000/predict -H "Content-Type:application/json" -d '{"text": "I like a cat"}'
 
-curl -X POST http://127.0.0.1:5000/predict -H 'Content-Type:application/json' -d @post_text.json
+curl -X POST http://127.0.0.1:5000/predict -H 'Content-Type:application/json' -d @request_data/request-ok.json
+curl -X POST https://flask-ml-api-06.azurewebsites.net/predict -H 'Content-Type:application/json' -d @request_data/post_text_1.json
 
 # 課題
 - opencvのビルド
